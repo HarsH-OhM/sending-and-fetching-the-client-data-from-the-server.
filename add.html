@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+.open-button {
+  background-color: rgb(37, 201, 64);
+  color: rgb(26, 5, 5);
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  top: 250px;
+  right: 40px;
+  width: 280px;
+}
+.details {
+  background-color: rgb(37, 201, 64);
+  color: rgb(26, 5, 5);
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  top: 250px;
+  left: 40px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 120px;
+  right: 500px;
+  border: 5px solid black;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.skills {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+</style>
+</head>
+<body>
+
+    <button class="open-button" onclick="openForm()">Add Experties</button>
+    <button class="details" onclick="parent.location='expertiseNRatesDisplay.php'">Expertise details</button>
+
+<div class="form-popup" id="myForm">
+
+    <form class="skills" method="POST" action="addskills.php">
+
+  <label for="fname">Expertise_Area:</label>
+  <input type="text" id="Expertise_Area" name="Expertise_Area" value=""><br><br>
+  <label for="lname">Experience:</label><br><br>
+  <label for="Years">Years:</label>
+  <input type="text" id="Years" name="Years" value="">
+  <label for="Months">Months:</label>
+  <input type="text" id="Months" name="Months" value=""><br><br>
+  <label for="rates">Training / Teaching Rates:</label><br><br>
+  <label for="remo">Remotes:</label>
+
+<select  name="Remotes">
+  <option value="HR">per HR</option>
+  <option value="topic">per Topic</option>
+  <option value="Chepter">per Chepter</option>  
+</select><br><br>
+
+<label for="centre">Centre:</label>
+
+<select name="Centre">
+  <option value="week">per Week</option>
+  <option value="mon">per Month</option>
+</select><br><br>
+
+<label for="Lernp">Lerners_Place:</label>
+
+<select name="Lerners_Place">
+  <option value="HR">per HR</option>
+  <option value="class">per class</option>
+</select><br><br>
+
+<label for="mplace">My_Place:</label>
+
+<select name="My_Place">
+  <option value="HR">per HR</option>
+  <option value="class">per Class</option>
+  
+</select><br><br><br>
+
+  <input type="submit" value="submit" id="submit">
+  <input type="button" value="close" onclick="closeForm()">
+
+</form> 
+</div>
+
+
+<script>
+
+function openForm() {
+  document.getElementById("myForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+
+
+    $(document).ready(function() {
+    $('#skills').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({                                  //making ajax call and will post the data  to the addskill.php page.
+            url: 'addskills.php',
+            data: $('form').serialize(),
+            type: 'POST',
+            dataType: "json",
+            success: function() {
+                $('form').reset();
+            },
+            complete: function() {
+                $('#skill').each(function(){
+                this.reset();//Here form fields will be cleared.
+            });
+        }
+    });
+    return false;
+});
+
+    })
+
+
+</script>
+
+</body>
+
+
+</html>
